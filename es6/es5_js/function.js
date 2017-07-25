@@ -2,6 +2,8 @@
 
 var _console;
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 /*
 *   es6 function 扩展
 * */
@@ -140,3 +142,104 @@ var arryy = _arrPush.concat(_arrPush);
 console.log(arryy); //[ 1, 2, 3, 4, 99, 78, 1, 2, 3, 4, 等 2 项… ]
 // es6
 var arry = [].concat(_arrPush, _arrPull);
+
+//与解构赋值结合  用于生成数组   扩展运算符用于数组赋值，稚嫩那个放在参数最后一位，否则报错
+var first = 1,
+    res = [2, 3, 4, 56, 4];
+
+console.log(first, res); // 1, [2,3,4,56,4] ;
+
+//函数的返回值
+/* 函数如需要返回多只时，除数组，对象外，还可以用扩展符解决
+* */
+
+//将字符串转为数组
+var str = [].concat(_toConsumableArray('hello'));
+console.log(str); //["h", "e", "l", "l", "o"]
+//类似数组的对象 任何类似数组的对象都可以用扩展运算符转为真正的数组
+/*  var dom = $('div');
+ var dom = [...dom] //真数组
+ * */
+
+// Map ,Set 解结构
+var map = new Map([[1, 'h'], [2, 'p'], [3, 'o']]);
+var map1 = [].concat(_toConsumableArray(map.keys()));
+console.log(map1); //[1, 2, 3]
+console.log([].concat(_toConsumableArray(map.values()))); //["h", "p", "o"]
+
+/*5 箭头函数 =>*/
+var f = function f(v) {
+  return v;
+};
+//dengyu
+var f = function f(v) {
+  return v;
+};
+// 如果箭头函数 不需要或需要多个参数，就是用一个（）代表参数布部分
+var funer = function funer() {
+  return 5;
+};
+//===
+function funer() {
+  return 5;
+};
+var sum = function sum(num1, num2) {
+  return num1 + num2;
+};
+//===
+function sum(num1, num2) {
+  return num1 + num2;
+};
+
+//如果箭头函数的代码块布冯多余一条语句就是用大括号将它们包起来，并且使用return  语句返回
+var yy = function yy(num) {
+  num = num + num;
+  return num;
+};
+
+//如果函数返回对象，则对象外面加上括号
+var obj = function obj() {
+  return { 'name': 'cmk' };
+};
+console.log(obj()); // {'name':'cmk'}
+
+//与解构结合使用
+var full = function full(_ref3) {
+  var fisy = _ref3.fisy,
+      two = _ref3.two;
+
+  return fisy + ' ' + two;
+};
+//=====
+function full(resd) {
+  return resd.fity + ' ' + resd.name;
+};
+
+// 叫你同意函数使得表达式更加简洁
+var add = function add(n) {
+  return n = n + n;
+};
+//数组排序
+var numArray = [3, 5, 7, 4, 8];
+var sortArray = numArray.sort(function (x, y) {
+  return x - y;
+});
+console.log(sortArray); //[3, 4, 5, 7, 8]
+
+// rest参数与箭头函数结合
+var ner = function ner() {
+  for (var _len2 = arguments.length, sortArray = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+    sortArray[_key2] = arguments[_key2];
+  }
+
+  return sortArray;
+};
+console.log(ner(1, 2, 3, 4, 5)); //sortArray
+
+/*
+*  箭头函数注意点
+*  1 函数体内的this对象，就是定义时所在的对象，而不是使用时所在的对像
+*  2 不可当作构造函数 ，既不能用New 命令
+*  3 不可使用argument是对象，改对象不存在，如果要用，可以用rest参数代替
+*  4 不可以使用yied 命令，不能当作=Generator 函数
+* */
