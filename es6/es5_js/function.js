@@ -243,3 +243,52 @@ console.log(ner(1, 2, 3, 4, 5)); //sortArray
 *  3 不可使用argument是对象，改对象不存在，如果要用，可以用rest参数代替
 *  4 不可以使用yied 命令，不能当作=Generator 函数
 * */
+// this 指向问题  箭头函数的指向总是指向函数的所在对象
+function foo() {
+  var _this = this;
+
+  setTimeout(function () {
+    console.log(_this.id);
+  }, 1000);
+}
+foo.call({ 'id': "cmk" }); //cmk this 指向foo 并不是windows
+/*  函数绑定
+ 函数绑定运算符是并排的两个双冒号（::），双冒号左边是一个对象，右边是一个函数。该运算符会自动将左
+ 边的对象，作为上下文环境（即this对象），绑定到右边的函数上面
+*   foo::bar  === bar.bind(foo)  foo 为对象 bar为函数
+*   foo::bar(...arguments) === bar.call(foo,aruemnts);
+*
+*   如果双冒号左边为空，右边是一个对象的方法，则等于将该方法绑定在该对象上面
+*   var tt =  ::obj.fun  === obj::obj.fun
+*   ===
+*   var tt = obj.fun.call(obj)
+*  由于双冒号运算符返回的还是原对象，因此可以采用链式写法
+*
+* */
+
+/*  7 尾调用的优化  函数最后一步调用一个函数
+ 尾调用（Tail Call）是函数式编程的一个重要概念，本身非常简单，一句话就能说清楚，就是指某个函数的最后一步是调用另一个函数。
+ 尾调用不一定出现在函数尾部，只要是最后一步操作即可
+*
+* */
+// 简单实示例
+function g(x) {
+  console.log(x);
+}
+function f1(x) {
+  return g(x); //尾调用 return 后直接调用函数 不参杂其他参数
+}
+f1(1); //1
+// 一下三种情况不属于为调用
+function p(x) {
+  g(x);
+}
+
+function t(x) {
+  var g = g(x);
+  return g;
+}
+
+function r(x) {
+  return g(x) + 1;
+}
