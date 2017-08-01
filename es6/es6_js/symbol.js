@@ -57,3 +57,9 @@
  * 常量使用Symbol值最大的好处，就是其他任何值都不可能有相同的值了，因此可以保证上面的switch语句会
   按设计的方式工作
  * */
+
+ /*Symbol.for(str) 有时，我们希望重新使用同一个Symbol值，Symbol.for()方法可以做到这一点。它接受一个字符串作为参数，
+  然后搜索有没有以该参数作为名称的Symbol值。如果有，就返回这个Symbol值，否则就新建并返回一个以该字符串为名称的Symbol值。*/
+ let symbol12 = Symbol.for('key');
+ let symbol13 =  Symbol.for('key');  //  Symbol.for('key')已存在，返回该值 常用此方法新建Symbol变量
+ console.log(symbol12 == symbol13 ); //true
